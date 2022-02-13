@@ -3,6 +3,9 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:github_commits_list/Constants/SizeConfig.dart';
+import 'package:github_commits_list/Pages/CommitsList.dart';
+import 'package:github_commits_list/Pages/Profile.dart';
 
 class BottomNavBarPage extends StatefulWidget {
   @override
@@ -10,7 +13,8 @@ class BottomNavBarPage extends StatefulWidget {
 }
 
 class _BottomNavBarPageState extends State<BottomNavBarPage> {
-  int currentIndex = 1;
+  int currentIndex = 0;
+  List<Widget> pages = [CommitsList(), Profile()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,13 +30,21 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
         },
         items: [
           BottomNavigationBarItem(
-              title: Text("Commits"),
+              title: Text(
+                "Commits",
+                style: TextStyle(
+                    fontFamily: "SourceSans",
+                    fontSize: SizeConfig.heightRatio * 1.25),
+              ),
               icon: SvgPicture.asset("assets/git-commit.svg",
                   color: currentIndex == 0
                       ? Color.fromRGBO(10, 132, 255, 1)
                       : Color.fromRGBO(10, 132, 255, 0.5))),
           BottomNavigationBarItem(
-            title: Text("User Profile"),
+            title: Text("User Profile",
+                style: TextStyle(
+                    fontFamily: "SourceSans",
+                    fontSize: SizeConfig.heightRatio * 1.25)),
             icon: SvgPicture.asset("assets/user.svg",
                 color: currentIndex == 1
                     ? Color.fromRGBO(10, 132, 255, 1)
@@ -40,7 +52,7 @@ class _BottomNavBarPageState extends State<BottomNavBarPage> {
           ),
         ],
       ),
-      body: Container(),
+      body: currentIndex == 0 ? CommitsList() : Profile(),
     );
   }
 }
